@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
+	<link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/css/estilo.css" media="screen"/>  
+	<title>Encurtador de URL</title>
+</h:head>
+
+<h:body>
+	<h:form id="formulario">
+		<p:messages showDetail="true"/>
+		<p:autoUpdate/>
+		<p:panelGrid columns="2">
+			<p:outputLabel>ID:</p:outputLabel>
+			<p:inputText value="#{urlManagedBean.url.id}" styleClass="inputURL"/>
+
+			<p:outputLabel>URL Longa:</p:outputLabel>
+			<p:inputText id="idUrlLonga" value="#{urlManagedBean.url.urlLonga}" styleClass="inputURL">
+				<p:watermark value="Informe a URL" for="idUrlLonga"/>	
+			</p:inputText>
+
+			<p:outputLabel>URL Curta:</p:outputLabel>
+			<p:inputText id="idUrlCurta" value="#{urlManagedBean.url.urlCurta}" readonly="true" styleClass="inputURL">
+				<p:watermark value="Clique no botão Encurtar" for="idUrlCurta"/>	
+			</p:inputText>
+		</p:panelGrid>
+
+		<br/>
+		<br/>
+		
+		<p:commandButton value="Encurtar" ajax="false" action="#{urlManagedBean.encurtarURL}" update="idUrlCurta"/>
+		<p:commandButton value="Salvar" ajax="false" action="#{urlManagedBean.salvar}"/>
+	</h:form>
+
+	<br/>
+	<br/>
+
+	<h:form id="formtable">
+		<p:dataTable value="#{urlManagedBean.list}" var="url">
+			<p:column headerText="ID" styleClass="colID">
+				<h:outputText value="#{url.id}"/>
+			</p:column>
+
+			<p:column headerText="URL Longa">
+				<h:outputText value="#{url.urlLonga}"/>
+			</p:column>
+
+			<p:column headerText="URL Curta" styleClass="colURLCurta">
+				<h:outputText value="#{url.urlCurta}"/>
+			</p:column>
+
+			<p:column headerText="Alterar" styleClass="colImagem">
+				<h:commandLink id="alterar" immediate="true">
+					<f:setPropertyActionListener value="#{url}" target="#{urlManagedBean.url}"/>
+					<f:ajax execute="alterar" render=":formulario"/>
+					<h:graphicImage url="img/alterar.png" styleClass="image"/>
+				</h:commandLink>
+			</p:column>
+
+			<p:column headerText="Excluir" styleClass="colImagem">
+				<h:commandLink id="excluir" action="#{urlManagedBean.excluir}">
+					<f:setPropertyActionListener value="#{url}" target="#{urlManagedBean.url}"/>
+					<f:ajax execute="excluir" render="@form"/>
+					<h:graphicImage url="img/excluir.jpg" styleClass="image"/>
+				</h:commandLink>
+			</p:column>
+		</p:dataTable>
+	</h:form>
+</h:body>
+</html>

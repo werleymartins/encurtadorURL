@@ -1,0 +1,21 @@
+.inputURL {
+	width: 1000;
+}
+
+.colID {
+	width: 60;
+    text-align: right;
+}
+
+.colURLCurta {
+	width: 250;
+}
+
+.colImagem {
+	width: 50;
+}
+
+.image {
+	width: 25;
+	height: 25;
+}
